@@ -9,11 +9,11 @@ export default function SignUp() {
   const {mutateAsync: addUserMutateAsync} = useMutationAddUser();
   const [message, setMessage] = useState('');
 
-  const onSubmit = (formData) => {
-    async function addUser () {
+  const onSubmit = async (formData) => {
+    
       if (formData) {
         try {
-        const res =  await addUserMutateAsync({user_id: new Date().getTime(), user_name: formData.userName, pass: formData.pass});
+        const res =  await addUserMutateAsync({user_id: new Date().getTime(), user_name: formData.userName, pass: formData.userPass});
         setMessage(res.data.message)
         } catch (error) {
           console.log(error);
@@ -22,7 +22,6 @@ export default function SignUp() {
       setTimeout(() => {
         setMessage('')
       }, 5000)
-     } addUser();
     reset();
   }
 

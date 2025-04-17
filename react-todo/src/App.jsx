@@ -5,7 +5,9 @@ import { useMutationAddTask } from './hooks/useMutationAddTask';
 import Auth from './components/Auth';
 import TodoContainer from './components/TodoContainer';
 import {Routes, Route } from 'react-router-dom';
-import Layout from './Layout';
+import Layout from './components/Layout';
+import AuthProvider from './components/AuthProvider';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -70,25 +72,29 @@ function App() {
  }
 
  return (
-  <Routes>
-    <Route path='/' element={<Layout />}>
-      <Route index element={
-        <TodoContainer inpAdd={inpAdd} 
-                       handleInpAddTaskValue={handleInpAddTaskValue}
-                       addTask={addTask}
-                       radioAll={radioAll} 
-                       handleCheckAll={handleCheckAll}
-                       radioDoned={radioDoned}
-                       handleCheckDoned={handleCheckDoned}
-                       radioActive={radioActive}
-                       handleActive={handleActive}
-                       todos={todos}
-                       isLoading={isLoading}
-                       refetch={refetch}/>
-      } />
-      <Route path='/auth' element={<Auth />} />
-    </Route>
+  <AuthProvider>
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route element={<PrivateRoute />}>
+          <Route path='/' element={
+            <TodoContainer inpAdd={inpAdd} 
+                           handleInpAddTaskValue={handleInpAddTaskValue}
+                           addTask={addTask}
+                           radioAll={radioAll} 
+                           handleCheckAll={handleCheckAll}
+                           radioDoned={radioDoned}
+                           handleCheckDoned={handleCheckDoned}
+                           radioActive={radioActive}
+                           handleActive={handleActive}
+                           todos={todos}
+                           isLoading={isLoading}
+                           refetch={refetch}/>
+          } />
+        </Route>
+        <Route path='/auth' element={<Auth />} />
+      </Route>
    </Routes>
+  </AuthProvider>
  );
 }
 

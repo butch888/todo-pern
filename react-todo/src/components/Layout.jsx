@@ -1,7 +1,7 @@
 import React from 'react'
-import Title from './components/Title'
+import Title from './Title'
 import { Outlet } from 'react-router-dom'
-import { AppContainer } from './AppStyled'
+import { AppContainer } from '../AppStyled'
 
 const Layout = () => {
   return (

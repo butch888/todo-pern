@@ -12,6 +12,7 @@ const delTaskRouter = require('./routes-for-tasks/delTask');
 // методы для юзеров
 const getUsersRouter = require('./routes-for-users/getUsers');
 const addUserRouter = require('./routes-for-users/addUser');
+const logInRouter = require('./routes-for-users/signIn');
 
 
 app.use(cors());
@@ -21,6 +22,7 @@ app.use(cors());
 app.use('/', getUsersRouter)
 // добавит юзера
 app.use('/', addUserRouter);
+app.use('/', logInRouter);
 
 //Tasks
 // получить все записи по id
