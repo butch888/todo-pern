@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { useQueryTasks } from './hooks/useQueryTasks';
 import { useMutationAddTask } from './hooks/useMutationAddTask';
-import Auth from './components/Auth';
-import TodoContainer from './components/TodoContainer';
 import {Routes, Route } from 'react-router-dom';
+import TodoContainer from './components/TodoContainer';
+import Auth from './components/Auth';
 import Layout from './components/Layout';
 import AuthProvider from './components/AuthProvider';
 import PrivateRoute from './components/PrivateRoute';
+import DelAllUsers from './components/DelAllUsers';
 
 function App() {
 
@@ -92,6 +93,7 @@ function App() {
           } />
         </Route>
         <Route path='/auth' element={<Auth />} />
+        <Route path='/delUsers' element={<DelAllUsers />} />
       </Route>
    </Routes>
   </AuthProvider>

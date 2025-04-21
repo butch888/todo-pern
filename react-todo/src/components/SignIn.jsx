@@ -1,17 +1,17 @@
 import { Form } from "./FormStyled";
 import { useForm } from 'react-hook-form';
-import { useMutationLogIn } from '../hookUsers/useMutationLogIn'; 
+import { useMutationSignIn } from '../hookUsers/useMutationSignIn'; 
 
 const SignIn = () => {
 
   const { register, handleSubmit, formState: {errors}, reset} = useForm({mode: "onChange",});
 
-  const {mutateAsync: logInMutateAsync} = useMutationLogIn();  
+  const {mutateAsync: signInMutateAsync} = useMutationSignIn();  
   
   const onSubmit = async (formData) => {
     console.log(formData)
     try {
-      await logInMutateAsync({user_name: formData.userName, pass: formData.userPass})
+      await signInMutateAsync({user_name: formData.userName, pass: formData.userPass})
     } catch (error) {
       console.log(error);
     }
@@ -50,4 +50,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default SignIn;

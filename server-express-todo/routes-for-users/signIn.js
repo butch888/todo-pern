@@ -2,9 +2,9 @@ const express = require('express');
 const pool = require('../bd');
 const bcrypt = require('bcryptjs');
 
-const logInRouter = express.Router();
+const signInRouter = express.Router();
 
-logInRouter.post('/logIn/:user_name/:pass', async (request, response) => {
+signInRouter.post('/signIn/:user_name/:pass', async (request, response) => {
   const { user_name, pass } = request.params;
   try {
     console.log('formData:', user_name, pass)
@@ -23,4 +23,4 @@ logInRouter.post('/logIn/:user_name/:pass', async (request, response) => {
 })
 
 
-module.exports = logInRouter;
+module.exports = signInRouter;

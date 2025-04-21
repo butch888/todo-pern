@@ -11,18 +11,21 @@ const delTaskRouter = require('./routes-for-tasks/delTask');
 
 // методы для юзеров
 const getUsersRouter = require('./routes-for-users/getUsers');
-const addUserRouter = require('./routes-for-users/addUser');
-const logInRouter = require('./routes-for-users/signIn');
-
+const signUpRouter = require('./routes-for-users/signUp');
+const signInRouter = require('./routes-for-users/signIn');
+const delUsersRouter = require('./routes-for-users/delUsers');
 
 app.use(cors());
 
 //Users
 //получить всех users
 app.use('/', getUsersRouter)
-// добавит юзера
-app.use('/', addUserRouter);
-app.use('/', logInRouter);
+// добавит юзера при регистрации
+app.use('/', signUpRouter);
+// Проверка юзера при входе
+app.use('/', signInRouter);
+// Удалить всех юзеров
+app.use('/', delUsersRouter);
 
 //Tasks
 // получить все записи по id

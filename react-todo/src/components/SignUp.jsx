@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { Form } from "./FormStyled";
 import { useForm } from 'react-hook-form';
-import { useMutationAddUser } from '../hookUsers/useMutationAddUser';
+import { useMutationSignUp } from '../hookUsers/useMutationSignUp';
 
 export default function SignUp() {
 
   const { register, handleSubmit, formState: {errors}, reset} = useForm({mode: 'onChange'});
-  const {mutateAsync: addUserMutateAsync} = useMutationAddUser();
+  const {mutateAsync: signUpMutateAsync} = useMutationSignUp();
   const [message, setMessage] = useState('');
 
   const onSubmit = async (formData) => {
     
       if (formData) {
         try {
-        const res =  await addUserMutateAsync({user_id: new Date().getTime(), user_name: formData.userName, pass: formData.userPass});
+        const res =  await signUpMutateAsync({user_id: new Date().getTime(), user_name: formData.userName, pass: formData.userPass});
         setMessage(res.data.message)
         } catch (error) {
           console.log(error);

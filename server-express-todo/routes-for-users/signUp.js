@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../bd');
 const bcrypt = require('bcryptjs');
 
-const addUserRouter = express.Router();
+const signUpRouter = express.Router();
 
 // Функция для асинхронного хеширования пароля
 const hashPassword = async (password) => {
@@ -29,7 +29,7 @@ async function checkUserNameExists(user_name) {
 }
 
 //добавить юзера
-addUserRouter.post('/addUser/:user_id/:user_name/:pass', async (request, response) => {
+signUpRouter.post('/signUp/:user_id/:user_name/:pass', async (request, response) => {
   const { user_id, user_name, pass } = request.params;
   console.log('FORM_DATA:######### ', user_name, pass)
   try {
@@ -65,4 +65,4 @@ addUserRouter.post('/addUser/:user_id/:user_name/:pass', async (request, respons
 });
 
 
-module.exports = addUserRouter;
+module.exports = signUpRouter;
