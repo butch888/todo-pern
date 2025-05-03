@@ -4,12 +4,12 @@ const pool = require('../bd');
 const addTasksRouter = express.Router();
 
 //добавить задачу
-addTasksRouter.post('/addTask/:id/:task/:isdone', async (request, response) => {
-  const {id, task, isdone } = request.params;
+addTasksRouter.post('/addTask/:id/:task/:isdone/:user_id', async (request, response) => {
+  const {id, task, isdone,user_id } = request.params;
   try {
       const res = await pool.query(
-        'INSERT INTO tasks (id, task, isdone) VALUES ($1, $2, $3) RETURNING *', 
-        [id, task, isdone]
+        'INSERT INTO tasks (id, task, isdone, user_id) VALUES ($1, $2, $3, $4) RETURNING *', 
+        [id, task, isdone, user_id]
       );
       response.send(res.rows);
       return res.rows;

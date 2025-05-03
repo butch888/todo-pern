@@ -9,7 +9,6 @@ const hashPassword = async (password) => {
   try {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    console.log(hash)
     return hash;
   } catch (err) {
     console.error(err);
@@ -31,7 +30,6 @@ async function checkUserNameExists(user_name) {
 //добавить юзера
 signUpRouter.post('/signUp/:user_id/:user_name/:pass', async (request, response) => {
   const { user_id, user_name, pass } = request.params;
-  console.log('FORM_DATA:######### ', user_name, pass)
   try {
     // Сначала проверяем, существует ли пользователь с таким именем
     if (await checkUserNameExists(user_name)) {
@@ -41,7 +39,6 @@ signUpRouter.post('/signUp/:user_id/:user_name/:pass', async (request, response)
 
     // Если пользователя нет, хешируем пароль
     const hashedPass = await hashPassword(pass);
-    console.log ('Hash:', hashedPass);
 
     // Теперь безопасно вставляем данные в базу данных с хешированным паролем
     const res = await pool.query(

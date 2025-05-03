@@ -20,7 +20,6 @@ export default function TodoContainer(props) {
 
   return (
     <div>
-
       <AddTask inpAdd={inpAdd}
                 handleInpAddTaskValue={handleInpAddTaskValue}
                 addTask={addTask} />

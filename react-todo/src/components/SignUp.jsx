@@ -5,23 +5,29 @@ import { useMutationSignUp } from '../hookUsers/useMutationSignUp';
 
 export default function SignUp() {
 
-  const { register, handleSubmit, formState: {errors}, reset} = useForm({mode: 'onChange'});
+  const { 
+    register, 
+    handleSubmit, 
+    formState: {errors, isValid}, 
+    reset
+  } = useForm({mode: 'onChange'});
+
   const {mutateAsync: signUpMutateAsync} = useMutationSignUp();
   const [message, setMessage] = useState('');
 
   const onSubmit = async (formData) => {
     
-      if (formData) {
-        try {
-        const res =  await signUpMutateAsync({user_id: new Date().getTime(), user_name: formData.userName, pass: formData.userPass});
-        setMessage(res.data.message)
-        } catch (error) {
-          console.log(error);
-        }
+    if (formData) {
+      try {
+      const res =  await signUpMutateAsync({user_id: new Date().getTime(), user_name: formData.userName, pass: formData.userPass});
+      setMessage(res.data.message)
+      } catch (error) {
+        console.log(error);
       }
-      setTimeout(() => {
-        setMessage('')
-      }, 5000)
+    }
+    setTimeout(() => {
+      setMessage('')
+    }, 5000)
     reset();
   }
 
@@ -64,7 +70,7 @@ export default function SignUp() {
         </div>
 
         <div>
-          <button style={{margin: '25px 0 0 0 '}}>
+          <button style={{margin: '25px 0 0 0 '}} disabled={!isValid}>
            Зарегистрироваться
           </button>
         </div>

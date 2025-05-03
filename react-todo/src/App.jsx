@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import {Routes, Route } from 'react-router-dom';
 import { useQueryTasks } from './hooks/useQueryTasks';
 import { useMutationAddTask } from './hooks/useMutationAddTask';
-import {Routes, Route } from 'react-router-dom';
-import TodoContainer from './components/TodoContainer';
-import Auth from './components/Auth';
-import Layout from './components/Layout';
-import AuthProvider from './components/AuthProvider';
-import PrivateRoute from './components/PrivateRoute';
-import DelAllUsers from './components/DelAllUsers';
+import {Auth, TodoContainer, Layout, AuthProvider, PrivateRoute, DelAllUsers } from './components/index';
 
 function App() {
 
@@ -36,11 +31,13 @@ function App() {
     }
   }
  }, [data, radioAll, radioDoned, radioActive, refetch]);
+
+ const userId = localStorage.getItem('user_id')
  
  async function addTask () {
   if (inpAdd) {
     try {
-      await addTaskMutateAsync({id: new Date().getTime(), task: inpAdd, isdone: false});
+      await addTaskMutateAsync({id: new Date().getTime(), task: inpAdd, isdone: false, user_id: userId});
     } catch (error) {
       console.log(error);
     }

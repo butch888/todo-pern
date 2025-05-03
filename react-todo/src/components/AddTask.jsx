@@ -5,7 +5,7 @@ const AddTask = (props) => {
   return (
     <div style={{margin: '10px 0'}}>
       <input type='text' value={inpAdd} autoFocus={true} onChange={handleInpAddTaskValue}/>
-      <button onClick={addTask}>Add</button>
+      <button onClick={addTask}>+</button>
     </div>
   )
 }

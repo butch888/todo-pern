@@ -1,26 +1,62 @@
+import { useState } from "react";
 import { Form } from "./FormStyled";
 import { useForm } from 'react-hook-form';
 import { useMutationSignIn } from '../hookUsers/useMutationSignIn'; 
+import { useNavigate } from "react-router-dom";
+import useAuth from "./useAuth";
 
 const SignIn = () => {
 
-  const { register, handleSubmit, formState: {errors}, reset} = useForm({mode: "onChange",});
+  const { 
+    register, 
+    handleSubmit, 
+    formState: {errors, isValid}
+  } = useForm({mode: "onChange",});
 
-  const {mutateAsync: signInMutateAsync} = useMutationSignIn();  
+  const { mutateAsync: signInMutateAsync } = useMutationSignIn();
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate()
+  const { signIn } = useAuth()
   
   const onSubmit = async (formData) => {
-    console.log(formData)
-    try {
-      await signInMutateAsync({user_name: formData.userName, pass: formData.userPass})
-    } catch (error) {
-      console.log(error);
-    }
-    
-    reset()
+    if (formData) {
+      try {
+        const res = await signInMutateAsync({user_name: formData.userName, pass: formData.userPass});
+        setMessage(res.data.message);
+
+        // Если аутентификация успешна, вызываем signIn
+        if (res.data.isValid) {
+          signIn(res.data.userData, () => navigate('/'), {replace: true});
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    setTimeout(() => {
+      setMessage('')
+    }, 5000)
   };
+
   return (
     <div>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <div style={{position: 'relative', top: '-50px'}}>
+          {message && (
+            <p style={{
+              color: message.includes('успешно') ? 'green' : 'red',
+              marginTop: '10px',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              textAlign: 'center'
+            }}>
+              {message}
+            </p>
+          )}
+        </div>
+
         <div style={{display: 'flex', gap: '20px', justifyContent: 'center', position: 'relative'}}>
           <div>
             <input {...register('userName', 
@@ -41,7 +77,7 @@ const SignIn = () => {
         </div>
       
         <div>
-          <button style={{margin: '25px 0 0 0'}}>
+          <button style={{margin: '25px 0 0 0'}} disabled={!isValid}>
            Войти
           </button>
         </div>      
